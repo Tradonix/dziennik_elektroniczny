@@ -29,8 +29,7 @@
             <h4 class="text-light mr-3">{{ user.username }}</h4>
             <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
             {% else %}
-{#            <a href="{% url 'login' %}">Login</a>#}
-                <a href="#">Login</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
             {% endif %}
         </div>
     </nav>
