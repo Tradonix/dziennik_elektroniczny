@@ -25,11 +25,11 @@
             <span>Dziennik Elektroniczny</span>
         </a>
         <div class="d-flex justify-content-around">
-            {% if user.is_authenthicated %}
-            <h4 class="text-light mr-3">{{ user.username }}</h4>
-            <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
+            {% if user.is_authenticated %}
+                <h4 class="text-light mr-3">{{ user.username }}</h4>
+                <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
             {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -38,19 +38,23 @@
 <section class="dashboard-section">
     <div class="row dashboard-nowrap">
         <ul class="nav flex-column long-bg">
-            {% for item in side_nav %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url item %}">
-                    <span>{{ item.key }}</span>
-                    <i class="fas fa-angle-right"></i>
-                </a>
-            </li>
+            {% for key, value in side_nav.items %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url value %}">
+                        <span>{{ key }}</span>
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
             {% endfor %}
         </ul>
 
         <div class="m-4 p-3 width-medium text-color-darker">
             {% block content %}
-                <h1>Dziennik Elektroniczny</h1> zrobiony w ramach projektu końcowego kursu CodersLab.
+                {% if content %}
+                    {{ content }}
+                {% else %}
+                    <h1>Dziennik Elektroniczny</h1> zrobiony w ramach projektu końcowego kursu CodersLab.
+                {% endif %}
             {% endblock content %}
         </div>
     </div>

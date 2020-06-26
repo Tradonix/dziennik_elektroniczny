@@ -1,0 +1,17 @@
+{% extends '__base__.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <div class="container">
+        {% for subject in subjects %}
+            <div class="row"
+                 style="background: {% if forloop.counter0|divisibleby:2 %}#9fa292{% else %}#cacaca{% endif %}">
+                <div class="col-sm">{{ subject.name }}</div>
+                <div class="col-8">
+                                {% for grade in subject.grades %}
+                                    <a>{{ grade }}, </a>
+                                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

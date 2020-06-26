@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -20,7 +19,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=32)),
                 ('students', models.ManyToManyField(related_name='learns', to=settings.AUTH_USER_MODEL)),
-                ('teacher', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teaches', to=settings.AUTH_USER_MODEL)),
+                ('teachers', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teaches',
+                                              to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -28,7 +28,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('value', models.IntegerField()),
-                ('graded_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('graded_by',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('subject', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.Subjects')),
             ],
         ),

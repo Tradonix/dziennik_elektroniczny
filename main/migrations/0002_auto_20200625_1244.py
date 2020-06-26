@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('main', '0001_initial'),
@@ -16,12 +15,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='grades',
             name='student',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='grades', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='grades',
+                                    to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='grades',
             name='graded_by',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='graded', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='graded',
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]
