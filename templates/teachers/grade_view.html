@@ -1,0 +1,12 @@
+{% extends '__base__.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+        <p>Ocena: <input type="number" disabled value="{{ value }}"></p>
+
+        <p>Przedmiot: <input type="text" disabled value="{{ subject }}"></p>
+
+        <p>Uczeń: <input type="text" disabled value="{{ student }}"></p>
+
+        <p>Ocenione przez: <input type="text" disabled value="{{ teacher }}"></p>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends '__base__.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Nazwa: <input type="text" name="name" value="{{ name }}"></p>
+        <p>Nauczyciel:
+            <select name="teacher">
+                {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}" {% if teacher.id == selected %}selected{% endif %}>
+                        {{ teacher.username }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>Uczniowie:
+            <select multiple name="students">
+                {% for student in students %}
+                    <option value="{{ student.id }}"
+                            {% if student.id|stringformat:"i" in selected_students %}selected{% endif %}>
+                        {{ student.username }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <input class="btn btn-primary btn-sm" type="submit" value="{{ btn }}">
+    </form>
+{% endblock %}

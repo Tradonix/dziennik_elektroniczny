@@ -1,0 +1,26 @@
+{% extends '__base__.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <div class="container">
+        {% for subject in subjects %}
+            <div class="row"
+                 style="background: {% if forloop.counter0|divisibleby:2 %}#9fa292{% else %}#cacaca{% endif %}">
+                <div class="col-sm">{{ subject.name }}</div>
+                <div class="col-8">
+                {% for student in subject.students %}
+                    <div class="row"
+                         style="background:  {% if forloop.counter0|divisibleby:2 %}khaki{% else %}lavender{% endif %}">
+                        <div class="col-sm">{{ student.username }}</div>
+                        <div class="col-sm">
+                                {% for grade in student.grades %}
+                                    <a href="{% url 'grade' pk=grade.id %}">{{ grade.value }}, </a>
+                                {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <a class="btn btn-primary btn-sm" href="{% url 'grade_add' %}">Dodaj ocenę</a>
+{% endblock %}
