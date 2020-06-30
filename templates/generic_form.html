@@ -7,7 +7,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if button %}
         <input type="submit" class="btn btn-primary" value="{{ button }}">
+        {% endif %}
         {% if button == 'Login' %}
             <a class="btn btn-secondary" href="{% url 'signup' %}">Sign Up</a>
         {% endif %}

@@ -1,0 +1,17 @@
+{% extends '__base__.html' %}
+{% block title %}Wiadomości{% endblock %}
+{% block content %}
+        <div class="container">
+        {% for message in messages %}
+            {% if not message.is_read %}<b>{% endif %}
+            <div class="row"
+                 style="background: {% if forloop.counter0|divisibleby:2 %}#9fa292{% else %}#cacaca{% endif %}">
+
+                <div class="col-sm">{{ message.send_by.username }}</div>
+                <div class="col-sm"><a href="{% url 'message' pk=message.id %}">{{ message.title }}</a></div>
+            </div>
+            {% if not message.is_read %}</b>{% endif %}
+        {% endfor %}
+    </div>
+    <a class="btn btn-primary btn-sm" href="{% url 'message_send' %}">Nowa wiadomość</a>
+{% endblock %}

@@ -13,3 +13,11 @@ class Grades(models.Model):
     subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
     graded_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graded')
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='grades')
+
+
+class Messages(models.Model):
+    send_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='msg_send')
+    send_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='msg_received')
+    title = models.CharField(max_length=32)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)

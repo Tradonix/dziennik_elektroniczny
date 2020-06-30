@@ -132,13 +132,12 @@ class GradeListView(PermissionRequiredMixin, View):
     def get(self, request):
         context = {}
         context['title'] = "Lista ocen"
+
+        # zmień: wejscie na grades daje liste przedmiotów, wejscie w przedmiot daje liste studentow i ich grades
         # subjects = [{
-        #     'name': "bla",
-        #     'students': [{'username': "dad",
-        #                  'grades': [{
-        #                      'id': 'id',
-        #                      'value': 'value'
-        #                  }]
+        #     'name': name,
+        #     'students': [{'username': username,
+        #                  'grades': QuerySet,
         #                   }]
         # }]
         subjects = []
@@ -148,13 +147,7 @@ class GradeListView(PermissionRequiredMixin, View):
             for student in Group.objects.get(name='students').user_set.all():
                 student_ = {}
                 student_['username'] = student.username
-                grades = []
-                for grade in Grades.objects.filter(student_id=student.id, subject_id=subject.id):
-                    grade_ = {}
-                    grade_['id'] = grade.id
-                    grade_['value'] = grade.value
-                    grades.append(grade_)
-                student_['grades'] = grades
+                student_['grades'] = Grades.objects.filter(student_id=student.id, subject_id=subject.id)
                 if student_['grades']:
                     students.append(student_)
             subject_['students'] = students
@@ -172,6 +165,6 @@ class GradeView(PermissionRequiredMixin, View):
         context = {}
         context['value'] = grade.value
         context['student'] = grade.student.username
-        context['teachers'] = grade.graded_by.username
+        context['teacher'] = grade.graded_by.username
         context['subject'] = grade.subject.name
         return render(request, 'teachers/grade_view.html', context)

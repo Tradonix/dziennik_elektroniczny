@@ -20,6 +20,9 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.MainView.as_view(), name='main'),
+    path('messages/', views.MessageListView.as_view(), name='messages'),
+    path('message/<int:pk>/', views.MessageView.as_view(), name='message'),
+    path('message/send/', views.SendMessageView.as_view(), name='message_send'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('teachers/', include('teachers.urls')),
