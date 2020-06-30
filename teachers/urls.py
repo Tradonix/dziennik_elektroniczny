@@ -8,6 +8,6 @@ urlpatterns = [
     path('subject/edit/<int:pk>/', views.SubjectEditView.as_view(), name='subject_edit'),
     path('grade/<int:pk>', views.GradeView.as_view(), name='grade'),
     path('grades/', views.GradeListView.as_view(), name='grades'),
-    path('grade/add/', views.GradeAddView.as_view(), name='grade_add'),
-    # path('grade/edit/<int:pk>/', views.GradeEditView.as_view(), name='grade_edit'),
+    path('grade/add/', views.SubjectSelectForGradeAddView.as_view(), name='grade_add_subject'),
+    path('grade/add/<int:pk>', views.GradeAddView.as_view(), name='grade_add'),
 ]

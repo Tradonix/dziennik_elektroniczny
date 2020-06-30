@@ -26,7 +26,7 @@ class SubjectAddView(PermissionRequiredMixin, View):
         context['title'] = 'Dodaj przedmiot'
         name = request.POST.get('name')
         context['name'] = name
-        teacher = User.objects.get(pk=request.POST.get('teachers'))
+        teacher = User.objects.get(pk=request.POST.get('teacher'))
         context['selected'] = teacher.id
         g = Group.objects.get(name='teachers')
         context['teachers'] = g.user_set.all()
@@ -69,7 +69,7 @@ class SubjectEditView(PermissionRequiredMixin, View):
         context['title'] = 'Zmień przedmiot'
         name = request.POST.get('name')
         context['name'] = name
-        teacher = User.objects.get(pk=request.POST.get('teachers'))
+        teacher = User.objects.get(pk=request.POST.get('teacher'))
         context['selected'] = teacher.id
         g = Group.objects.get(name='teachers')
         context['teachers'] = g.user_set.all()
@@ -95,34 +95,41 @@ class SubjectListView(PermissionRequiredMixin, View):
         return render(request, 'teachers/subject_list.html', context)
 
 
-class GradeAddView(PermissionRequiredMixin, View):
+class SubjectSelectForGradeAddView(PermissionRequiredMixin, View):
     permission_required = ['main.add_grades']
 
     def get(self, request):
         context = {}
         context['title'] = 'Dodaj ocenę'
-        context['btn'] = 'Dodaj'
         context['subjects'] = Subjects.objects.all()
-        g = Group.objects.get(name='students')
-        context['students'] = g.user_set.all()
-        return render(request, 'teachers/grades_form.html', context)
+        return render(request, 'teachers/grades_subject_list.html', context)
 
-    def post(self, request):
+
+class GradeAddView(PermissionRequiredMixin, View):
+    permission_required = ['main.add_grades']
+
+    def get(self, request, pk):
         context = {}
         context['title'] = 'Dodaj ocenę'
         context['btn'] = 'Dodaj'
-        context['subjects'] = Subjects.objects.all()
-        g = Group.objects.get(name='students')
-        context['students'] = g.user_set.all()
-        subject = request.POST.get('subject')
-        context['selected_subject'] = subject
+        s = Subjects.objects.get(pk=pk)
+        context['students'] = s.students.all()
+        return render(request, 'teachers/grades_form.html', context)
+
+    def post(self, request, pk):
+        context = {}
+        context['title'] = 'Dodaj ocenę'
+        context['btn'] = 'Dodaj'
+        s = Subjects.objects.get(pk=pk)
+        context['students'] = s.students.all()
+        subject = pk
         student = request.POST.get('student')
         context['selected_student'] = student
         value = request.POST.get('value')
         context['value'] = value
         if value and student and subject:
             Grades.objects.create(value=value, student_id=student, subject_id=subject, graded_by=request.user)
-            return redirect(reverse_lazy('grade_add'))
+            return redirect(reverse_lazy('grade_add_subject'))
         return render(request, 'teachers/grades_form.html', context)
 
 
@@ -162,9 +169,4 @@ class GradeView(PermissionRequiredMixin, View):
 
     def get(self, request, pk):
         grade = Grades.objects.get(pk=pk)
-        context = {}
-        context['value'] = grade.value
-        context['student'] = grade.student.username
-        context['teacher'] = grade.graded_by.username
-        context['subject'] = grade.subject.name
-        return render(request, 'teachers/grade_view.html', context)
+        return render(request, 'teachers/grade_view.html', {'grade': grade})

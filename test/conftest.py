@@ -14,10 +14,4 @@ def user():
     user = User(username='Qwerty')
     user.set_password('qwerty')
     user.save()
-    # p = Permission.objects.get(codename='view_book')
-    # user.user_permissions.add(p)
-    # p = Permission.objects.get(codename='add_book')
-    # user.user_permissions.add(p)
-    # p = Permission.objects.get(codename='change_book')
-    # user.user_permissions.add(p)
     return user

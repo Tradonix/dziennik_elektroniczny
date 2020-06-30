@@ -4,19 +4,11 @@
     <form method="post">
         {% csrf_token %}
         <p>Ocena: <input type="number" name="value" value="{{ value }}"></p>
-        <p>Przedmiot:
-            <select name="subject">
-                {% for subject in subjects %}
-                    <option value="{{ subject.id }} {% if subject.id == selected_subject %}selected{% endif %}">
-                        {{ subject.name }}</option>
-                {% endfor %}
-            </select>
-        </p>
 
         <p>Uczeń:
             <select name="student">
                 {% for student in students %}
-                    <option value="{{ student.id }}" {% if student.id == selected_student %}selected{% endif %}>
+                    <option value="{{ student.id }}" {% if student.id|stringformat:"i" == selected_student %}selected{% endif %}>
                         {{ student.username }}</option>
                 {% endfor %}
             </select>

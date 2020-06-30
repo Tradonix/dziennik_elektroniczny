@@ -1,12 +1,12 @@
 {% extends '__base__.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-        <p>Ocena: <input type="number" disabled value="{{ value }}"></p>
+        <p>Ocena: <input type="number" disabled value="{{ grade.value }}"></p>
 
-        <p>Przedmiot: <input type="text" disabled value="{{ subject }}"></p>
+        <p>Przedmiot: <input type="text" disabled value="{{ grade.subject.name }}"></p>
 
-        <p>Uczeń: <input type="text" disabled value="{{ student }}"></p>
+        <p>Uczeń: <input type="text" disabled value="{{ grade.student.username }}"></p>
 
-        <p>Ocenione przez: <input type="text" disabled value="{{ teacher }}"></p>
+        <p>Ocenione przez: <input type="text" disabled value="{{ grade.graded_by.username }}"></p>
 
 {% endblock %}
