@@ -1,5 +1,7 @@
 import pytest
 
+from main.models import Subjects
+
 
 @pytest.mark.django_db
 def test_main(client):
@@ -49,3 +51,16 @@ def test_teacher_grades(client, grades_as_in_view_teacher, user_teacher):
     for i, subject in enumerate(grades_as_in_view_teacher):
         for element in subject:
             assert element in response.context['subjects'][i]
+
+
+@pytest.mark.django_db
+def test_teacher_subjects(client, user_teacher):
+    client.login(username='Teacher', password='teacher')
+    response = client.get('/teachers/subjects/')
+
+    assert response.status_code == 200
+
+    assert len(response.context['subjects']) == len(Subjects.objects.all())
+
+    for i in range(len(Subjects.objects.all())):
+        assert Subjects.objects.all()[i] in response.context['subjects']
